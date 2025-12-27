@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Security Tool</title>
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🔒 Password Security Tool</h1>
+            <p class="subtitle">Analyze strength & generate secure passwords</p>
+        </header>
+        
+        <main>
+            <!-- Analyzer Section -->
+            <section class="analyzer-section">
+                <h2>Password Analyzer</h2>
+                
+                <div class="input-group">
+                    <input type="password" id="password-input" placeholder="Enter a password to analyze..." autocomplete="off">
+                    <button id="toggle-visibility" type="button">👁️ Show</button>
+                </div>
+                
+                <div class="strength-meter">
+                    <div class="meter-container">
+                        <div class="meter-fill" id="meter-fill"></div>
+                    </div>
+                    <div class="strength-info">
+                        <div class="strength-label" id="strength-label">Enter password</div>
+                        <div class="score-display">Score: <span id="score-value">0</span>/100</div>
+                    </div>
+                </div>
+                
+                <div class="feedback">
+                    <h3>How to improve:</h3>
+                    <ul id="feedback-list">
+                        <li>Enter a password to get started</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Password Generator Section -->
+            <section class="generator-section">
+                <h2>🔐 Password Generator</h2>
+                
+                <!-- Generator Type Toggle -->
+                <div class="generator-toggle">
+                    <div class="toggle-buttons">
+                        <button class="toggle-btn active" data-type="random">
+                            🔐 Random Password
+                        </button>
+                        <button class="toggle-btn" data-type="personal">
+                            🧠 Personal Password
+                        </button>
+                    </div>
+                    <p class="toggle-description" id="generator-description">
+                        Generate completely random, secure passwords
+                    </p>
+                </div>
+                
+                <!-- Random Generator (Default - Visible) -->
+                <div class="generator-content active" id="random-generator">
+                    <div class="generator-controls">
+                        <!-- Length Control -->
+                        <div class="control-group">
+                            <label for="length-slider">
+                                Password Length: <span id="length-value">12</span> characters
+                            </label>
+                            <input type="range" id="length-slider" min="8" max="32" value="12" class="slider">
+                        </div>
+                        
+                        <!-- Character Options -->
+                        <div class="control-group">
+                            <p>Include:</p>
+                            <div class="checkbox-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="uppercase" checked>
+                                    <span class="checkmark"></span>
+                                    Uppercase (A-Z)
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" id="lowercase" checked>
+                                    <span class="checkmark"></span>
+                                    Lowercase (a-z)
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" id="numbers" checked>
+                                    <span class="checkmark"></span>
+                                    Numbers (0-9)
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" id="symbols" checked>
+                                    <span class="checkmark"></span>
+                                    Symbols (!@#$%^&*)
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Generate Button & Output -->
+                        <div class="control-group">
+                            <button id="generate-random-btn" class="generate-btn">
+                                🔄 Generate Random Password
+                            </button>
+                            
+                            <div class="password-output">
+                                <input type="text" id="generated-password" readonly>
+                                <button id="copy-btn" class="copy-btn" title="Copy to clipboard">
+                                    📋 Copy
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Generator Feedback -->
+                        <div class="generator-feedback">
+                            <p><strong>Entropy:</strong> <span id="entropy-value">0</span> bits</p>
+                            <p><strong>Possible combinations:</strong> <span id="combinations-value">0</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Personal Generator (Hidden by Default) -->
+                <div class="generator-content" id="personal-generator">
+                    <div class="generator-controls">
+                        <div class="personal-info-form">
+                            <div class="control-group">
+                                <h3>🔮 Create a Memorable Password</h3>
+                                <p class="form-description">
+                                    Enter information you'll remember. We'll mix it securely!
+                                </p>
+                                
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="user-name">Your Name or Nickname</label>
+                                        <input type="text" id="user-name" placeholder="e.g., Alex" maxlength="20">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="user-pet">Pet Name or Favorite Animal</label>
+                                        <input type="text" id="user-pet" placeholder="e.g., Max" maxlength="15">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="user-number">Favorite Number</label>
+                                        <input type="number" id="user-number" placeholder="e.g., 7" min="0" max="9999">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="user-year">Important Year</label>
+                                        <input type="number" id="user-year" placeholder="e.g., 2024" min="1900" max="2100">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="user-color">Favorite Color</label>
+                                        <input type="text" id="user-color" placeholder="e.g., Blue" maxlength="10">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="user-city">City or Hometown</label>
+                                        <input type="text" id="user-city" placeholder="e.g., Paris" maxlength="15">
+                                    </div>
+                                </div>
+                                
+                                <div class="personal-options">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="add-symbols" checked>
+                                            <span class="checkmark"></span>
+                                            Add symbols (@#$% etc.)
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="add-numbers" checked>
+                                            <span class="checkmark"></span>
+                                            Add numbers
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="mix-case" checked>
+                                            <span class="checkmark"></span>
+                                            Mix uppercase/lowercase
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Generate Button & Output -->
+                            <div class="control-group">
+                                <button id="generate-personal-btn" class="generate-btn personal-btn">
+                                    🧠 Generate Personal Password
+                                </button>
+                                
+                                <div class="password-output">
+                                    <input type="text" id="personal-password" readonly>
+                                    <button id="copy-personal-btn" class="copy-btn" title="Copy to clipboard">
+                                        📋 Copy
+                                    </button>
+                                </div>
+                                
+                                <div class="personal-tips">
+                                    <p><strong>💡 Tips:</strong> Use real information you'll remember. The more fields you fill, the stronger your password!</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Personal Generator Feedback -->
+                            <div class="generator-feedback">
+                                <p><strong>Entropy:</strong> <span id="personal-entropy">0</span> bits</p>
+                                <p><strong>Memorability:</strong> <span id="memorability-score">Easy</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Notice -->
+                <div class="security-notice">
+                    <p><strong>Important:</strong> Personal passwords are easier to remember but may be weaker against targeted attacks. 
+                    Use random passwords for sensitive accounts (email, banking).</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>All processing happens in your browser. No data is sent to servers.</p>
+            <p>&copy;2025 <a href="https://arbipacolli.netlify.app/" target="_blank">Arbi Pacolli</a> Network Engineer & Junior Developer.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="src/js/analyzer.js"></script>
+    <script src="src/js/generator.js"></script>
+    <script src="src/js/personal-generator.js"></script>
+    <script src="src/js/app.js"></script>
+    
+    <!-- Matrix Rain Script -->
+    <script>
+        // Matrix Rain Effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('matrix-rain');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas to window size
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Matrix characters
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+            const charArray = chars.split("");
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            // Initialize drops
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+            
+            function drawMatrix() {
+                // Semi-transparent black to create trail effect
+                ctx.fillStyle = "rgba(10, 14, 23, 0.04)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.font = `${fontSize}px 'Courier New'`;
+                
+                for (let i = 0; i < drops.length; i++) {
+                    // Random character
+                    const char = charArray[Math.floor(Math.random() * charArray.length)];
+                    
+                    // Green with varying opacity
+                    const opacity = Math.random();
+                    ctx.fillStyle = `rgba(0, 255, 65, ${opacity})`;
+                    
+                    // Draw character
+                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                    
+                    // Move drop down
+                    drops[i]++;
+                    
+                    // Randomly reset drop
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                }
+            }
+            
+            // Adjust on resize
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+            
+            // Start animation if user has good performance
+            if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+                setInterval(drawMatrix, 50); // Slower for better performance
+            }
+        });
+    </script>
+</body>
+</html>
